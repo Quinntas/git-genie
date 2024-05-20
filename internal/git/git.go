@@ -22,10 +22,11 @@ func Add(path string) error {
 }
 
 func Commit(message string) error {
-	_, err := cmd.Run("git", "commit", "-m", message)
+	out, err := cmd.Run("git", "commit", "-m", message)
 	if err != nil {
 		return fmt.Errorf("failed to commit")
 	}
+	fmt.Println(out)
 	return nil
 }
 
@@ -42,10 +43,11 @@ func CommitAll(message string) error {
 }
 
 func Push() error {
-	_, err := cmd.Run("git", "push")
+	out, err := cmd.Run("git", "push")
 	if err != nil {
 		return fmt.Errorf("failed to push")
 	}
+	fmt.Println(out)
 	return nil
 }
 
