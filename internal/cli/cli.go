@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"flag"
 	"os"
 )
 
@@ -14,10 +15,14 @@ func NewArgs() *Args {
 		return nil
 	}
 
-	cmd := commandValidator(os.Args[1])
+	cmdPtr := flag.String("cmd", "", "Git command")
+
+	flag.Parse()
+
+	cmd := commandValidator(*cmdPtr)
 
 	return &Args{
 		Command: cmd,
-		Args:    os.Args[2:],
+		Args:    flag.Args(),
 	}
 }
