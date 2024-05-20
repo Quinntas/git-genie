@@ -4,7 +4,6 @@ import (
 	"github.com/quinntas/git-genie/internal/cli"
 	"github.com/quinntas/git-genie/internal/gh"
 	"github.com/quinntas/git-genie/internal/git"
-	stringUtils "github.com/quinntas/git-genie/internal/utils/string"
 )
 
 func verifyPackages() {
@@ -22,18 +21,9 @@ func verifyPackages() {
 func main() {
 	verifyPackages()
 
-	args := cli.NewArgs()
-
-	if args != nil {
-		switch (*args).Command {
-		case cli.COMMAND_COMMIT_ALL:
-			err := git.CommitAll(stringUtils.ArrayToString((*args).Args))
-			if err != nil {
-				panic(err)
-			}
-		default:
-			panic("unhandled default case")
-		}
+	err := cli.HandleCli()
+	if err != nil {
+		panic(err)
 	}
 
 	//p := tea.NewProgram(models.NewMainModel())
