@@ -12,17 +12,15 @@ import (
 	"github.com/quinntas/git-genie/internal/utils/structs"
 )
 
-type MainModel struct {
+type ContainerModel struct {
 	loaded   bool
 	quitting bool
 
 	spinner spinner.Model
 	structs.Dimensions
-
-	help help.Model
 }
 
-func NewMainModel() *MainModel {
+func NewContainerModel() *ContainerModel {
 	helpModel := help.New()
 	helpModel.ShowAll = true
 
@@ -30,16 +28,15 @@ func NewMainModel() *MainModel {
 	s.Spinner = spinner.Dot
 	s.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
 
-	return &MainModel{
+	return &ContainerModel{
 		loaded:     false,
 		quitting:   false,
 		spinner:    s,
 		Dimensions: structs.NewDimensions(0, 0),
-		help:       helpModel,
 	}
 }
 
-func (m *MainModel) Init() tea.Cmd {
+func (m *ContainerModel) Init() tea.Cmd {
 	if m.loaded || !m.quitting {
 		return nil
 	} else {
@@ -47,15 +44,13 @@ func (m *MainModel) Init() tea.Cmd {
 	}
 }
 
-func (m *MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *ContainerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.Dimensions.Width = msg.Width
 		m.Dimensions.Height = msg.Height
-
-		m.help.Width = msg.Width
 
 		m.loaded = true
 		return m, tea.Batch()
@@ -75,12 +70,10 @@ func (m *MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, cmd
 	}
 
-	m.help, cmd = m.help.Update(msg)
-
 	return m, cmd
 }
 
-func (m *MainModel) View() string {
+func (m *ContainerModel) View() string {
 	if !m.loaded {
 		str := fmt.Sprintf("\n\n   %s Loading...   \n\n", m.spinner.View())
 		return styles.PlaceCenter(m.Width, m.Height, str)
@@ -91,7 +84,5 @@ func (m *MainModel) View() string {
 		return styles.PlaceCenter(m.Width, m.Height, str)
 	}
 
-	helpView := m.help.View(bindings.Keys)
-
-	return styles.PlaceCenter(m.Width, m.Height, helpView)
+	return styles.PlaceCenter(m.Width, m.Height, "Welcome to Git Genie!")
 }
