@@ -1,10 +1,10 @@
 package main
 
 import (
-	tea "github.com/charmbracelet/bubbletea"
+	"github.com/quinntas/git-genie/internal/cli"
 	"github.com/quinntas/git-genie/internal/gh"
 	"github.com/quinntas/git-genie/internal/git"
-	"github.com/quinntas/git-genie/internal/tea/models"
+	stringUtils "github.com/quinntas/git-genie/internal/utils/string"
 )
 
 func verifyPackages() {
@@ -22,8 +22,22 @@ func verifyPackages() {
 func main() {
 	verifyPackages()
 
-	p := tea.NewProgram(models.NewMainModel())
-	if _, err := p.Run(); err != nil {
-		panic(err)
+	args := cli.NewArgs()
+
+	if args != nil {
+		switch (*args).Command {
+		case cli.COMMAND_COMMIT_ALL:
+			err := git.CommitAll(stringUtils.ArrayToString((*args).Args))
+			if err != nil {
+				panic(err)
+			}
+		default:
+			panic("unhandled default case")
+		}
 	}
+
+	//p := tea.NewProgram(models.NewMainModel())
+	//if _, err := p.Run(); err != nil {
+	//	panic(err)
+	//}
 }
