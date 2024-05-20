@@ -5,6 +5,7 @@ github.com/aymanbagabas/go-osc52/v2
 ## explicit; go 1.18
 github.com/charmbracelet/bubbles/help
 github.com/charmbracelet/bubbles/key
+github.com/charmbracelet/bubbles/spinner
 # github.com/charmbracelet/bubbletea v0.25.0
 ## explicit; go 1.17
 github.com/charmbracelet/bubbletea

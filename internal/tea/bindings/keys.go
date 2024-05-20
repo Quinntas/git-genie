@@ -2,6 +2,10 @@ package bindings
 
 import "github.com/charmbracelet/bubbles/key"
 
+func (k keyMap) ShortHelp() []key.Binding {
+	return []key.Binding{k.Help, k.Quit}
+}
+
 func (k keyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{
 		{k.Up, k.Down},
