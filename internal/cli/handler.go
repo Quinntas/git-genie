@@ -17,6 +17,12 @@ func HandleCli() error {
 				return err
 			}
 
+		case COMMAND_PUSH:
+			err := git.Push()
+			if err != nil {
+				return err
+			}
+
 		default:
 			return errors.New("command not handled")
 		}

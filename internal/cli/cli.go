@@ -15,7 +15,7 @@ func NewArgs() *Args {
 		return nil
 	}
 
-	cmdPtr := flag.String("cmd", "", "Git command")
+	cmdPtr := flag.String("c", "", "Git command")
 
 	flag.Parse()
 
