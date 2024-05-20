@@ -1,0 +1,54 @@
+package git
+
+import (
+	"fmt"
+	"github.com/quinntas/git-genie/internal/utils/cmd"
+)
+
+func VerifyInstallation() error {
+	_, err := cmd.Run("git", "--version")
+	if err != nil {
+		return fmt.Errorf("git is not installed")
+	}
+	return nil
+}
+
+func Add(path string) error {
+	_, err := cmd.Run("git", "add", path)
+	if err != nil {
+		return fmt.Errorf("failed to add %s", path)
+	}
+	return nil
+}
+
+func Commit(message string) error {
+	_, err := cmd.Run("git", "commit", "-m", message)
+	if err != nil {
+		return fmt.Errorf("failed to commit")
+	}
+	return nil
+}
+
+func CommitAll(message string) error {
+	_, err := cmd.Run("git", "commit", "-am", message)
+	if err != nil {
+		return fmt.Errorf("failed to commit")
+	}
+	return nil
+}
+
+func Push() error {
+	_, err := cmd.Run("git", "push")
+	if err != nil {
+		return fmt.Errorf("failed to push")
+	}
+	return nil
+}
+
+func Clone(url string) error {
+	_, err := cmd.Run("git", "clone", url)
+	if err != nil {
+		return fmt.Errorf("failed to clone - %s", url)
+	}
+	return nil
+}
