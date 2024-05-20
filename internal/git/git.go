@@ -32,11 +32,11 @@ func Commit(message string) error {
 func CommitAll(message string) error {
 	err := Add(".")
 	if err != nil {
-		return fmt.Errorf("failed to add all")
+		return err
 	}
-	_, err = cmd.Run("git", "commit", "-m", message)
+	err = Commit(message)
 	if err != nil {
-		return fmt.Errorf("failed to commit")
+		return err
 	}
 	return nil
 }
